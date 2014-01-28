@@ -11,7 +11,7 @@ tracks = db.execute ( "SELECT Artist.Name, Album.Title, Track.Name
 	on Track.AlbumId = Album.AlbumId
 	INNER JOIN Album 
 	on Album.ArtistId = Artist.ArtistId " ) 
-#tracks.each { |line| puts "*** #{line}" }
+tracks.each { |line| puts "*** #{line}" }
 
 
 # 2. For each genre of music, finds the number of tracks and the average song length.
@@ -29,8 +29,18 @@ end
 # your code here.
 
 top_rock_artists = db.execute ( "SELECT Artist.Name
-	FROM Artist
-	INNER JOIN " )
+	, COUNT(Track.TrackID)
+	FROM Track
+	INNER JOIN Album
+	on Album.AlbumId = Track.AlbumId
+	INNER JOIN Artist
+	on Album.ArtistId = Artist.ArtistId
+	INNER JOIN Genre
+	on Genre.GenreID = Track.GenreId
+	WHERE Genre.Name == 'Rock'
+	GROUP BY Artist.Name
+	ORDER BY COUNT(Track.TrackID) DESC limit 5" )
+puts top_rock_artists
 
 
 # sql = " SELECT a.name, count(t.trackId) FROM Track t inner join Album b on t.albumId = b.albumId "
