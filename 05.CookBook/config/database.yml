@@ -1,3 +1,6 @@
+#infos de connexion à la DB pour ActiveRecord
+#Il pourrait y avoir la même chose pour un environnement de prod...
+
 development:
   adapter: sqlite3
   database: db/cookbook.sqlite3
