@@ -32,8 +32,9 @@ def parse(file)
 	end
 end
 
-# 2. driver_code
+ingredients.each do |ingredient|
+  file = save_to_html_file(ingredient)
+  parse(file)
+end
 
-html_curry = save_to_html_file("curry")
-parse(html_curry)
-Recipe.all.each { |recipe| puts recipe }
+#je ne sais pas comment avoir la difficulté (chez moi les solutions de Felix ou Emmanuel ne marchent pas)
