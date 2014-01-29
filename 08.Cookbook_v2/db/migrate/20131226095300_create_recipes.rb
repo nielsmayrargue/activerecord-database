@@ -1,5 +1,12 @@
 class CreateRecipes < ActiveRecord::Migration
   def up
-    # your code here to create the recipes table
+    create_table :recipes do |t|
+      t.string :name
+      t.text :description
+      t.integer :length
+      t.integer :difficulty
+      t.integer :rating
+      t.integer :user_id
+    end
   end
 end

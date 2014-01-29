@@ -1,3 +1,3 @@
 class Recipe < ActiveRecord::Base
-  # your code here
+  belongs_to :customer
 end
