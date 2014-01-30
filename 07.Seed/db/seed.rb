@@ -7,8 +7,10 @@ require 'pry'
 
 puts "Seeding database..."
 
+Recipe.destroy_all
+
 # Here is a sample of ingredients (you are free to add some !)
-ingredients = ["curry", "crevettes", "agneau", "pomme", "orange", "café", "asperges", "celeri", "dorade"]
+ingredients = ["curry"]
 
 # Your code goes here 
 # 1. Scrape recipes data from marmiton for these ingredients
@@ -21,14 +23,12 @@ def parse(file)
 	doc = Nokogiri::HTML(open(file))
 	
 	doc.xpath("//div[contains(@class,'m_search_result')]").each do |recipe_html|
-		name = recipe_html.xpath("//div[contains(@class,'m_search_titre_recette')]/a/text()")
-		description = recipe_html.xpath("//div[contains(@class,'m_search_result_part')]/text()")
-		length = (/Préparation : \d+/).match(description.to_s).to_s.to_i
+		puts name = recipe_html.xpath("./div[contains(@class,'m_search_titre_recette')]/a/text()").to_s
+		puts description = recipe_html.xpath("./div[contains(@class,'m_search_result_part')]/text()").to_s
+		puts length = (/Préparation : \d+/).match(description.to_s).to_s.to_i
 		rating = 0
-		recipe_html.xpath("//div[contains(@class,'m_search_note_recette')]").each do |note|
-			rating += 1 if note.include?("étoile1")
-		end
-		Recipe.create(name: name, description: description, length: length, rating: rating)
+		puts recipe_html.xpath("./div[contains(@class,'m_search_note_recette')]").length
+		Recipe.create(name: name, description: description, length: length, difficulty: 2, rating: rating)
 	end
 end
 
