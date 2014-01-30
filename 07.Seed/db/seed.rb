@@ -21,15 +21,13 @@ end
 
 def parse(file)
 	doc = Nokogiri::HTML(open(file))
-	
-	doc.xpath("//div[contains(@class,'m_search_result')]").each do |recipe_html|
-		puts name = recipe_html.xpath("./div[contains(@class,'m_search_titre_recette')]/a/text()").to_s
-		puts description = recipe_html.xpath("./div[contains(@class,'m_search_result_part')]/text()").to_s
-		puts length = (/Préparation : \d+/).match(description.to_s).to_s.to_i
-		rating = 0
-		puts recipe_html.xpath("./div[contains(@class,'m_search_note_recette')]").length
-		Recipe.create(name: name, description: description, length: length, difficulty: 2, rating: rating)
-	end
+	doc.search('.m_search_result').each do |element|
+		name = element.search('.m_search_titre_recette a').inner_text
+		description = element.search('.m_search_result_part4').inner_text
+		length = (/(\d+)/).match(description)[0].to_i
+		rating = element.search('.etoile1').size
+		Recipe.create(name: name, description: description, length: length, rating: rating, difficulty: rand(1..5))
+	end	
 end
 
 ingredients.each do |ingredient|

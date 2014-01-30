@@ -2,7 +2,7 @@ require_relative 'config/application'
 require './models/recipe'
 
 # query the database here
-Recipe.all.each { |recipe| puts recipe.rating}
+Recipe.all.each { |recipe| puts "#{recipe.name} #{recipe.description}"}
 # gets only the recipes with difficulty 3
 puts recipes_with_difficulty_3 = Recipe.where('difficulty > 2')
 # gets the top 10 difficult recipes
