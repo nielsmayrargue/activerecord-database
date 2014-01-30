@@ -1,10 +1,16 @@
 require_relative 'config/application'
 require './models/recipe'
+require './models/user'
+
 
 # your code here to query the database
-User.count
+puts User.count
 
 # finds all the recipes that contain
 User.all.each do |user|
-	puts "#{user.name} #{user.collection(force_reload = false)}"
+	user_name = user.name
+	recipes = user.recipes
+	recipes_names = ""
+	recipes.each { |recipe| recipes_names << recipe.name }
+	puts "#{user_name} *** #{recipes_names}"
 end
